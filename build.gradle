@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+    id 'org.graalvm.buildtools.native' version '0.10.6'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = 'org.example.App'
+}
+
+graalvmNative {
+    binaries {
+        main {
+            quickBuild = true
+        }
+    }
+}
