@@ -16,7 +16,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           cache: 'gradle'
       - name: Build
-        run: gradlew nativeCompile
+        run: gradlew.bat nativeCompile
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
