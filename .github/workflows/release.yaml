@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
+env:
+  ARTIFACT_NAME: graalvm-gihub-actions-test.exe
 jobs:
   release:
     runs-on: windows-2025
@@ -17,8 +19,10 @@ jobs:
           cache: 'gradle'
       - name: Build
         run: ./gradlew nativeCompile
-      - name: Upload archive
-        uses: actions/upload-artifact@v4
+      - name: Create archive
+        working-directory: ./build/native/nativeCompile
+        run: zip $ARTIFACT_NAME.zip $ARTIFACT_NAME
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: graalvm-gihub-actions-test.exe
-          path: ./build/native/nativeCompile/graalvm-gihub-actions-test.exe
+          files: ./build/native/nativeCompile/$ARTIFACT_NAME.zip
