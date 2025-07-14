@@ -35,7 +35,7 @@ tasks.register('zipNativeOutput') {
         def outputDir = layout.buildDirectory.dir("native/nativeCompile").get().asFile
 
         outputDir.eachFile { file ->
-            if (file.isFile()) {
+            if (file.isFile() && !file.name.matches(/native-image-.*\.args/)) {
                 def zipFile = new File(outputDir, "${file.name}.zip")
                 ant.zip(destfile: zipFile) {
                     fileset(file: file)
