@@ -27,3 +27,22 @@ graalvmNative {
         }
     }
 }
+
+tasks.register('zipNativeOutput') {
+    dependsOn tasks.named('nativeCompile')
+
+    doLast {
+        def outputDir = layout.buildDirectory.dir("native/nativeCompile").get().asFile
+
+        outputDir.eachFile { file ->
+            if (file.isFile()) {
+                def zipFile = new File(outputDir, "${file.name}.zip")
+                ant.zip(destfile: zipFile) {
+                    fileset(file: file)
+                }
+            }
+        }
+    }
+}
+
+nativeCompile.finalizedBy("zipNativeOutput")

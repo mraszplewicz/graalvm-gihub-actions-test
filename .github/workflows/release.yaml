@@ -17,8 +17,7 @@ jobs:
           cache: 'gradle'
       - name: Build
         run: ./gradlew nativeCompile
-      - name: Upload archive
-        uses: actions/upload-artifact@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: graalvm-gihub-actions-test.exe
-          path: ./build/native/nativeCompile/graalvm-gihub-actions-test.exe
+          files: ./build/native/nativeCompile/*.zip
